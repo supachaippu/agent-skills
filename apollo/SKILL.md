@@ -1,11 +1,11 @@
 ---
 name: apollo
-description: Master skill for building new features with top-tier UI/UX and rigorous tests. Orchestrates ui-ux-pro-max, hallmark, implement-spec, tdd, web-design-guidelines, and impeccable. Triggers on /apollo, "new feature", "build feature", "ui design", "ทำฟีเจอร์ใหม่", "สร้างหน้าเว็บ", "ทำ ui".
+description: Master skill for building new features with top-tier Tremor Blocks UI/UX and rigorous tests. Orchestrates ui-ux-pro-max, tremor-blocks, implement-spec, tdd, web-design-guidelines, and impeccable. Triggers on /apollo, "new feature", "build feature", "ui design", "ทำฟีเจอร์ใหม่", "สร้างหน้าเว็บ", "ทำ ui", "tremor".
 ---
 
-# Apollo: Feature Creation & UI/UX Excellence Pipeline
+# Apollo: Feature Creation & Tremor UI/UX Excellence Pipeline
 
-เมื่อผู้ใช้ต้องการสร้างฟีเจอร์ใหม่, พัฒนาหน้าจอผู้ใช้ (UI/UX), หรือพิมพ์ `/apollo`, "ทำฟีเจอร์ใหม่", "สร้างหน้าเว็บ", "ทำ ui":
+เมื่อผู้ใช้ต้องการสร้างฟีเจอร์ใหม่, พัฒนาหน้าจอผู้ใช้ (UI/UX), หน้า Dashboard, หรือพิมพ์ `/apollo`, "ทำฟีเจอร์ใหม่", "สร้างหน้าเว็บ", "ทำ ui", "tremor":
 ให้ประสานงานชุดสกิลพัฒนาและออกแบบคุณภาพสูงตามลำดับขั้นตอนดังนี้:
 
 ---
@@ -18,16 +18,19 @@ description: Master skill for building new features with top-tier UI/UX and rigo
 
 ## ขั้นตอนที่ 2: วางแนวทางการออกแบบอัจฉริยะ (Design Intelligence)
 - **ประสานงานสกิล:** `ui-ux-pro-max`
-- เลือกคู่ฟอนต์ (Font Pairing) ที่เหมาะสมกับโทนของผลิตภัณฑ์
-- กำหนดโทนสีและชุดคู่สี (Harmonious Palette) ที่มี Contrast Ratio ได้มาตรฐานการเข้าถึง (Accessibility)
-- วางระบบ Spacing และ Layout Grid ที่เป็นสัดส่วนชัดเจน
+- เลือกคู่ฟอนต์: Inter + Prompt + JetBrains Mono (สำหรับตัวเลขและโค้ด)
+- กำหนดโทนสีเน้นความสะอาด คมชัดระดับโปรดักชัน (Zinc Palette: `zinc-50` / `zinc-950`)
+- วางระบบ Spacing และ Layout Grid ที่มี Contrast Ratio ได้มาตรฐานการเข้าถึง (Accessibility)
 
 ---
 
-## ขั้นตอนที่ 3: ป้องกันงานเกรด AI โหล (Anti-AI-Slop via Hallmark)
-- **ประสานงานสกิล:** `hallmark`
-- หลีกเลี่ยงเลย์เอาต์สำเร็จรูปที่ดูเป็น AI ทั่วไป (No generic gradient cards / cookie-cutter UI)
-- สร้างเอกลักษณ์เฉพาะตัว (Distinct Identity), ลำดับสายตาที่เฉียบคม, และความเรียบง่ายแต่เปี่ยมด้วยประโยชน์ใช้สอย
+## ขั้นตอนที่ 3: สถาปัตยกรรม UI สไตล์ Tremor Blocks (Tremor Dashboard & UI Standard)
+- **มาตรฐานคอมโพเนนต์:** ยึดรูปแบบ **[Tremor Blocks](https://blocks.tremor.so/)** เป็นหลักสำหรับ UI/UX และ Dashboard:
+  - **KPI & Metric Cards:** แสดง Category, ค่าตัวเลขเด่นชัด (Tabular Nums), Subtitle, Progress Bar, Delta Badge พร้อม Micro-chart
+  - **Status Banners & Callouts:** แถบสถานะระบบพร้อมไอคอน Shield/Check, Badge สีสุขภาพระบบ (Emerald/Amber/Rose) และข้อความสรุปกระชับ
+  - **Navigation & Controls:** แถบ Header คมชัด, Dark/Light Mode สลับนุ่มนวล, และปุ่ม Refresh/Action สไตล์มินิมอล
+  - **Typography & Icons:** ใช้ฟอนต์ Inter / Prompt คู่กับ JetBrains Mono และไอคอน Lucide
+  - **Data Density & Tone:** เน้นโทน Zinc เรียบหรู ขอบบางเบา (`ring-1 ring-zinc-950/5 dark:ring-white/10`), ไม่มีกราเดียนต์สีม่วงฟุ้งโหลแบบ AI
 
 ---
 
