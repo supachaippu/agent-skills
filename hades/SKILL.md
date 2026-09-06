@@ -6,7 +6,7 @@ description: Master skill for database design, migrations, RLS policies, and saf
 # Hades: Database Architecture, Security & Safe Migration Pipeline
 
 เมื่อต้องทำงานกับฐานข้อมูล, ปรับเปลี่ยนโครงสร้างตาราง (Schema Migration), กำหนดสิทธิ์ RLS, หรือพิมพ์ `/hades`, "ฐานข้อมูล", "migration", "rls", "supabase sql":
-ให้ปฏิบัติตามมาตรฐานความปลอดภัยและข้อกำหนดทางเทคนิคอย่างเคร่งครัดดังนี้:
+ให้ปฏิบัติตามมาตรฐานความปลอดภัยและ **จุดเบรกบังคับหยุด (Hard Blocking Gates)** อย่างเคร่งครัดดังนี้:
 
 ---
 
@@ -17,7 +17,7 @@ description: Master skill for database design, migrations, RLS policies, and saf
 - **คำสั่งต้องห้ามเด็ดขาด:** ห้ามรันคำสั่ง `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `CREATE`, `TRUNCATE` บน SAP Server SQL เด็ดขาด (ยกเว้นกรณีพิเศษการอัปเดต EnbApprDI ใน OADM ที่ได้รับคำสั่งตรงจากป๋า)
 
 ### 2. ฐานข้อมูล Cloud D1: ห้าม Remote Seeding
-- **ห้ามรันสคริปต์ล้าง/เขียนทับฐานข้อมูล:** ห้ามรันคำสั่งประเภท `npx wrangler d1 execute ... --file=seed.sql` บน Cloud D1 เด็ดขาด เพื่อป้องกันความเสี่ยงในการทำ Database Cleansing ที่ทำให้ข้อมูลผู้ใช้สูญหาย
+- **ห้ามรันสคริปต์ล้าง/เขียนทับฐานข้อมูล:** ห้ามรันคำสั่งประเภท `npx wrangler d1 execute ... --file=seed.sql` บน Cloud D1 เด็ดขาด เพื่อป้องกันความเสี่ยงในการทำ Database Cleansing ที่ทำให้ข้อมูลจริงสูญหาย
 
 ### 3. มาตรฐาน n8n PostgreSQL Node
 - เมื่อสร้างหรือแก้ไขโหนด PostgreSQL ใน n8n:
@@ -31,28 +31,41 @@ description: Master skill for database design, migrations, RLS policies, and saf
 
 ---
 
-## ขั้นตอนที่ 1: วางมาตรฐานโครงสร้างและการย้ายฐานข้อมูล (Postgres Best Practices)
+## ขั้นตอนที่ 1: วางมาตรฐานโครงสร้างฐานข้อมูล (Postgres Best Practices)
 - **ประสานงานสกิล:** `supabase-postgres-best-practices`
-- เลือกใช้ Data types ที่เหมาะสมและประหยัดพื้นที่ (e.g., `timestamptz`, `uuid`, `text` แทน `varchar` ไร้ขนาด)
-- กำหนด Primary Keys, Foreign Keys พร้อม Index เพื่อป้องกัน Table Scan
-- เขียน Migration สคริปต์ที่รองรับ Concurrent Indexing และไม่ล็อกตารางเป็นเวลานาน
+- เลือกใช้ Data types ที่เหมาะสม (`timestamptz`, `uuid`, `text` แทน `varchar` ไร้ขนาด)
+- กำหนด Primary Keys, Foreign Keys พร้อม Index ป้องกัน Table Scan
 
 ---
 
-## ขั้นตอนที่ 2: สร้าง Mock และ Type Assertion ที่ปลอดภัย (Type Safety)
+## ขั้นตอนที่ 2: จุดเบรกที่ 1 — แสดงสคริปต์ SQL Migration และขอคำยืนยัน (MANDATORY SQL REVIEW)
+- 🛑 **คำสั่งเบรกแตก (CRITICAL HARD STOP):**
+  - **ห้าม AI นำสคริปต์ SQL DDL ไปรันหรือยิงเข้าฐานข้อมูลจริงโดยไม่แสดงให้ผู้ใช้ตรวจเด็ดขาด**
+  - AI ต้องแสดงบล็อกคำสั่ง SQL อย่างครบถ้วน:
+    ```sql
+    -- ตัวอย่างสคริปต์ Migration
+    ALTER TABLE ... ADD COLUMN ...;
+    CREATE INDEX CONCURRENTLY ...;
+    ```
+  - อธิบายว่าคำสั่งนี้จะกระทบกับตารางใด และมีผลต่อข้อมูลเดิมอย่างไร
+  - **หยุดรอคำยืนยันอนุมัติจากผู้ใช้ก่อน จึงจะเริ่มดำเนินการรันหรือนำไปใส่ใน Migration File ได้**
+
+---
+
+## ขั้นตอนที่ 3: สร้าง Mock และ Type Assertion ที่ปลอดภัย (Type Safety)
 - **ประสานงานสกิล:** `migrate-to-shoehorn`
 - สำหรับชุดทดสอบที่มีการจำลองข้อมูลฐานข้อมูล ให้ใช้การยืนยัน Type-safe เพื่อป้องกัน Mock แตกเมื่อ Schema เปลี่ยนแปลง
 
 ---
 
-## ขั้นตอนที่ 3: ตรวจสอบและบังคับใช้นโยบายความปลอดภัย RLS (RLS Policy Audit)
+## ขั้นตอนที่ 4: จุดเบรกที่ 2 — ตรวจสอบและบังคับใช้นโยบายความปลอดภัย RLS (RLS Policy Audit)
 - **ประสานงานสกิล:** `supabase-audit-rls`
 - ตรวจสอบให้แน่ใจว่าตารางเปิดใช้งาน `ALTER TABLE ... ENABLE ROW LEVEL SECURITY;`
-- เขียนนโยบาย (Policies) แยกตาม Action: `SELECT`, `INSERT`, `UPDATE`, `DELETE`
-- ตรวจสอบช่องโหว่ความปลอดภัย เช่น นโยบายหลุดให้ `auth.uid() IS NULL` หรือการบายพาสข้าม Tenant
+- แสดงและตรวจสอบนโยบาย (Policies) แยกตาม Action: `SELECT`, `INSERT`, `UPDATE`, `DELETE`
+- ป้องกันช่องโหว่บายพาส เช่น `auth.uid() IS NULL` หรือการเข้าถึงข้าม Tenant
 
 ---
 
-## ขั้นตอนที่ 4: ตรวจสอบและทดสอบผลลัพธ์ (Verification & Testing)
+## ขั้นตอนที่ 5: ตรวจสอบและทดสอบผลลัพธ์ (Verification & Testing)
 - รันการทดสอบ Query เพื่อวัดประสิทธิภาพและยืนยันผลลัพธ์
 - ทดสอบสิทธิ์การเข้าถึงทั้งในฐานะ Authenticated User และ Anonymous User เพื่อยืนยันว่า RLS ป้องกันข้อมูลได้จริง 100%
