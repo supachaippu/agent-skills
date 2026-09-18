@@ -14,5 +14,6 @@
 
 ## 2. สถานะปัจจุบัน (Current Status)
 - ✅ ติดตั้งระบบ **Pipeline Tracker** ครบทุกสกิลหลักแล้ว
-- ✅ ซิงค์เข้าสู่ `~/.agents/skills/`, `.agents/skills/`, และ `agent-skills/`
+- ✅ เพิ่มสกิล **`heimdall`** (ผู้พิทักษ์ทวารบาล Zero-Trust API, Cloudflare Turnstile, Free Rate Limiting, และกับดัก AI Canary Honeypot)
+- ✅ ซิงค์เข้าสู่ `agent-skills/` และ `.agents/skills/`
 - ✅ ผ่านการทดสอบ syntax/frontmatter ทุกตัว 100%

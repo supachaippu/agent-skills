@@ -17,7 +17,7 @@ npx skills add supachaippu/agent-skills --skill atlas hercules hermes -g
 
 ---
 
-## 🏛️ รายชื่อ 9 สกิลเทพเจ้ากรีก (Greek God Suite)
+## 🏛️ รายชื่อ 10 สกิลเทพเจ้ากรีก/นอร์ส (God Master Suite)
 
 | สกิล | หน้าที่ | คำสั่งเรียกใช้ |
 | :--- | :--- | :--- |
@@ -30,6 +30,7 @@ npx skills add supachaippu/agent-skills --skill atlas hercules hermes -g
 | **`hermes`** | ตรวจสอบความปลอดภัย Handoff สแกนข้อมูลลับ และส่งงานขึ้น GitHub คู่ขนาน 2 บัญชี พร้อมสรุปรายงาน | `/hermes`, `/ship`, "ส่งงาน", "จบงาน" |
 | **`atlas`** | รับช่วงงานต่อจากเซสชันก่อนหน้า อ่าน Handoff เข้าโหมด Caveman เปิดเกราะป้องกัน และหยุดรอคำสั่ง | `/atlas`, "resume", "เริ่มต่อ" |
 | **`aegis`** | เกราะป้องกันความปลอดภัยสูงสุด (SAP Read-Only 100%, ห้ามรันคำสั่งที่ Root, ล็อกขอบเขตโฟลเดอร์) | `/aegis`, "guardrails", "เกราะป้องกัน" |
+| **`heimdall`** | ผู้พิทักษ์ทวารบาล Zero-Trust API, Turnstile ป้องกันบอท, Bifröst Rate Limit, และกับดัก AI Canary Honeypot | `/heimdall`, "gatekeeper", "กันบอท", "rate limit" |
 
 ---
 
